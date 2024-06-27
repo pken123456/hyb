@@ -152,7 +152,7 @@ if (uni.restoreGlobal) {
       const isFromButton = uni.getStorageSync("isFromButton");
       if (isFromButton) {
         const generatedId = uni.getStorageSync("generatedId");
-        formatAppLog("log", "at pages/tabbar/tabbar-2/tabbar-2.vue:39", "tabbar2:Retrieved ID:", generatedId);
+        formatAppLog("log", "at pages/tabbar/tabbar-2/tabbar-2.vue:20", "tabbar2:Retrieved ID:", generatedId);
         if (generatedId) {
           this.loadData(generatedId);
         }
@@ -162,7 +162,7 @@ if (uni.restoreGlobal) {
       }
       const history = uni.getStorageSync("historyRecords") || [];
       this.historyRecords = history;
-      formatAppLog("log", "at pages/tabbar/tabbar-2/tabbar-2.vue:55", "tabbar2:historyRecords:", history);
+      formatAppLog("log", "at pages/tabbar/tabbar-2/tabbar-2.vue:36", "tabbar2:historyRecords:", history);
     },
     methods: {
       loadData(id) {
@@ -172,8 +172,11 @@ if (uni.restoreGlobal) {
         }
       },
       addHistoryRecord(item) {
-        const currentTime = (/* @__PURE__ */ new Date()).toLocaleString();
-        this.historyRecords.unshift({ id: item.id, type: item.type, res: item.res, time: currentTime });
+        const currentTime = /* @__PURE__ */ new Date();
+        const formattedTime = `${currentTime.getFullYear()}.${currentTime.getMonth() + 1}.${currentTime.getDate()}  ${currentTime.getHours()}:${currentTime.getMinutes() < 10 ? "0" + currentTime.getMinutes() : currentTime.getMinutes()}`;
+        formatAppLog("log", "at pages/tabbar/tabbar-2/tabbar-2.vue:48", currentTime);
+        formatAppLog("log", "at pages/tabbar/tabbar-2/tabbar-2.vue:49", formattedTime);
+        this.historyRecords.unshift({ id: item.id, type: item.type, res: item.res, time: formattedTime });
         uni.setStorageSync("historyRecords", this.historyRecords);
       }
     }
@@ -200,41 +203,46 @@ if (uni.restoreGlobal) {
         )
       ])) : vue.createCommentVNode("v-if", true),
       vue.createElementVNode("div", { class: "history" }, [
-        vue.createElementVNode("h3", null, "历史记录"),
+        vue.createElementVNode("div", { class: "title" }, [
+          vue.createElementVNode("h3", null, "历史记录")
+        ]),
         $data.historyRecords.length === 0 ? (vue.openBlock(), vue.createElementBlock("div", { key: 0 }, "暂无记录")) : vue.createCommentVNode("v-if", true),
-        (vue.openBlock(true), vue.createElementBlock(
-          vue.Fragment,
-          null,
-          vue.renderList($data.historyRecords, (record) => {
-            return vue.openBlock(), vue.createElementBlock("div", {
-              key: record.time
-            }, [
-              vue.createElementVNode(
-                "p",
-                null,
-                "时间: " + vue.toDisplayString(record.time),
-                1
-                /* TEXT */
-              ),
-              vue.createElementVNode(
-                "p",
-                null,
-                "类型: " + vue.toDisplayString(record.type),
-                1
-                /* TEXT */
-              ),
-              vue.createElementVNode(
-                "p",
-                null,
-                "结果: " + vue.toDisplayString(record.res),
-                1
-                /* TEXT */
-              )
-            ]);
-          }),
-          128
-          /* KEYED_FRAGMENT */
-        ))
+        vue.createElementVNode("ul", null, [
+          (vue.openBlock(true), vue.createElementBlock(
+            vue.Fragment,
+            null,
+            vue.renderList($data.historyRecords, (record) => {
+              return vue.openBlock(), vue.createElementBlock("li", {
+                class: "list1",
+                key: record.time
+              }, [
+                vue.createElementVNode(
+                  "span",
+                  null,
+                  "时间: " + vue.toDisplayString(record.time),
+                  1
+                  /* TEXT */
+                ),
+                vue.createElementVNode(
+                  "span",
+                  null,
+                  "类型: " + vue.toDisplayString(record.type),
+                  1
+                  /* TEXT */
+                ),
+                vue.createElementVNode(
+                  "span",
+                  null,
+                  "结果: " + vue.toDisplayString(record.res),
+                  1
+                  /* TEXT */
+                )
+              ]);
+            }),
+            128
+            /* KEYED_FRAGMENT */
+          ))
+        ])
       ])
     ]);
   }
@@ -419,7 +427,7 @@ if (uni.restoreGlobal) {
           this.messages.push({ text: botResponse, user: false });
           this.updateScrollTop();
         } catch (error) {
-          formatAppLog("error", "at pages/tabbar/tabbar-5/tabbar-5.vue:61", "Error during API call:", error);
+          formatAppLog("error", "at pages/tabbar/tabbar-5/tabbar-5.vue:49", "Error during API call:", error);
           this.messages.push({ text: "Error: Unable to communicate with the bot", user: false });
           this.updateScrollTop();
         }
@@ -431,8 +439,7 @@ if (uni.restoreGlobal) {
       vue.createElementVNode("scroll-view", {
         class: "chat-container",
         "scroll-y": "",
-        "scroll-top": $data.scrollTop,
-        style: { "height": "300upx" }
+        "scroll-top": $data.scrollTop
       }, [
         (vue.openBlock(true), vue.createElementBlock(
           vue.Fragment,
@@ -454,11 +461,12 @@ if (uni.restoreGlobal) {
         ))
       ], 8, ["scroll-top"]),
       vue.withDirectives(vue.createElementVNode(
-        "input",
+        "textarea",
         {
           class: "input-box",
+          "confirm-type": "send",
           "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.userInput = $event),
-          onConfirm: _cache[1] || (_cache[1] = (...args) => $options.sendMessage && $options.sendMessage(...args)),
+          onBlur: _cache[1] || (_cache[1] = (...args) => $options.sendMessage && $options.sendMessage(...args)),
           placeholder: "Type your message..."
         },
         null,
@@ -470,7 +478,7 @@ if (uni.restoreGlobal) {
       vue.createElementVNode("button", {
         class: "send-button",
         onClick: _cache[2] || (_cache[2] = (...args) => $options.sendMessage && $options.sendMessage(...args))
-      }, "Send")
+      }, "发送")
     ]);
   }
   const PagesTabbarTabbar5Tabbar5 = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "D:/HBuilder demo/test6/pages/tabbar/tabbar-5/tabbar-5.vue"]]);

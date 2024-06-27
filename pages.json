@@ -87,5 +87,9 @@
 				"text": "问答"
 			}
 		]
-	}
+	},
+	"easycom": {
+	  "autoscan": true,
+	},
+	"app-plus":{"bounce":"none"}
 }

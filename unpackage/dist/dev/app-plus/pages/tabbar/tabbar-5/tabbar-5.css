@@ -1,28 +1,32 @@
 
 .content {
-    text-align: center;
-    height: auto;
-    margin-top: 6.25rem;
+    height: 100%;
 }
 .chat-container {
     border: 1px solid #ccc;
     padding: 10px;
-    height: 15.625rem;
+    height: 80%;
     overflow-y: scroll;
 }
 .message {
 	text-align: left;
-    padding: 10px;
-    margin-right: 15px;
+    padding: 20px;
+	margin-left: 20px;
+    margin-right: 25%;
 }
 .user-message {
     text-align: right;
+	margin-right: 20px;
+	margin-left: 25%;
 }
 .input-box {
-    width: 80%;
-    padding: 10px;
-    margin: 10px;
+	width: 100%;
+	height: 7%;
+    padding: 10px 20px 10px 20px;
+/*    margin: 0 20px 0 20px; */
 }
 .send-button {
+	height: 7%;
+	background-color:mediumspringgreen;
     padding: 10px;
 }

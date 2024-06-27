@@ -1,10 +1,3 @@
-<template>
-    <view class="content">
-        <view v-if="isLoading">Loading...</view>
-        <button v-else @click="goToPage2">Go to Page 2</button>
-    </view>
-</template>
-
 <script>
 export default {
     data() {
@@ -63,19 +56,65 @@ export default {
                 });
             });
         }
-
-    }
+    },
 };
 </script>
+
+<template>
+    <view class="content">
+        <view v-if="isLoading" class="loading-container">
+            <view class="loader"></view>
+        </view>
+        <view v-else @click="goToPage2" class="circle-button">开始推测</view>
+    </view>
+</template>
 
 <style>
 .content {
     text-align: center;
-    margin-top: 200upx;
 }
 
-button {
-    height: 50px;
-    width: 200px;
+.circle-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 35px;
+    color: white;
+    background-color: #056cff;
+    width: 200px; /* 为圆形按钮设置固定宽度 */
+    height: 200px; /* 为圆形按钮设置固定高度 */
+    border-radius: 100px; /* 为了实现圆形形状，设置为宽度/高度的一半 */
+    text-align: center;
+    margin: 200px auto; /* 将按钮居中 */
+    box-shadow: 0 5px 50px #056cff; /* 阴影效果 */
+    opacity: 0.95;
+    transition: transform 0.3s; /* 动画效果 */
 }
+
+.circle-button:hover {
+    transform: scale(1.05); /* 鼠标悬停效果 */
+}
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+	margin-top: 50%;
+}
+
+.loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 </style>

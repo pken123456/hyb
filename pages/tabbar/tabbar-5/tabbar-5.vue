@@ -1,15 +1,3 @@
-<template>
-  <view class="content">
-    <scroll-view class="chat-container" scroll-y :scroll-top="scrollTop" style="height: 300upx;">
-      <view v-for="(message, index) in messages" :key="index" class="message" :class="{ 'user-message': message.user }">
-        {{ message.text }}
-      </view>
-    </scroll-view>
-    <input class="input-box" v-model="userInput" @confirm="sendMessage" placeholder="Type your message..." />
-    <button class="send-button" @tap="sendMessage">Send</button>
-  </view>
-</template>
-
 <script>
 export default {
   data() {
@@ -67,33 +55,49 @@ export default {
 };
 </script>
 
+<template>
+  <view class="content">
+    <scroll-view class="chat-container" scroll-y :scroll-top="scrollTop">
+      <view v-for="(message, index) in messages" :key="index" class="message" :class="{'user-message': message.user }">
+        {{ message.text }}
+      </view>
+    </scroll-view>
+    <textarea class="input-box" confirm-type="send"
+	 v-model="userInput" @blur="sendMessage" placeholder="Type your message..." />
+    <button class="send-button" @tap="sendMessage">发送</button>
+  </view>
+</template>
 
 <style>
   .content {
-    text-align: center;
-    height: auto;
-    margin-top: 200upx;
+    height: 100%;
   }
   .chat-container {
     border: 1px solid #ccc;
     padding: 10px;
-    height: 500upx;
+    height: 80%;
     overflow-y: scroll;
   }
   .message {
 	text-align: left;
-    padding: 10px;
-    margin-right: 15px;
+    padding: 20px;
+	margin-left: 20px;
+    margin-right: 25%;
   }
   .user-message {
     text-align: right;
+	margin-right: 20px;
+	margin-left: 25%;
   }
   .input-box {
-    width: 80%;
-    padding: 10px;
-    margin: 10px;
+	width: 100%;
+	height: 7%;
+    padding: 10px 20px 10px 20px;
+/*    margin: 0 20px 0 20px; */
   }
   .send-button {
+	height: 7%;
+	background-color:mediumspringgreen;
     padding: 10px;
   }
 </style>

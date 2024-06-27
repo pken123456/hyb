@@ -1,13 +1,29 @@
 
 .content {
         text-align: center;
-        margin-top: 6.25rem;
 }
 .content2 {
-        color: #f35622;
+        color: #1014f3;
 }
 .history {
         margin-top: 20px;
+}
+.title{
+		margin-bottom: 20px;
+}
+ul {
+        list-style-type: none; /* 移除列表样式 */
+        padding: 0; /* 移除默认内边距 */
+}
+.list1 {
+        border: solid #aaaaaa; /* 添加边框 */
+		border-width: 2px 0 2px 0;
+        padding: 6px; /* 内边距 */
+        display: flex; /* 使用 flexbox 布局 */
+        flex-direction: column; /* 垂直排列 */
+}
+.list1 span {
+        margin: 5px 0; /* 每个 span 的上下外边距 */
 }
 .history p {
         color: #333;

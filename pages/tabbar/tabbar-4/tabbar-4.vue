@@ -1,15 +1,3 @@
-<template>
-    <view class="content">
-        <view><button @click="toggleCamera">{{ buttonText1 }}</button>
-        <img v-if="isCameraOpen" :src="cameraUrl" autoplay controls default-src></img>
-        </view>
-		<button @click="toggleMusic">{{ buttonText2 }}</button>
-        <view v-if="isMusicOpen" class="music-list">
-            <button v-for="item in musicList" :key="item" @click="sendMusicData(item)">Item {{ item }}</button>
-        </view>
-    </view>
-</template>
-
 <script>
 export default {
     data() {
@@ -100,6 +88,18 @@ export default {
     }
 }
 </script>
+
+<template>
+    <view class="content">
+        <view><button @click="toggleCamera">{{ buttonText1 }}</button>
+        <img v-if="isCameraOpen" :src="cameraUrl" autoplay controls default-src></img>
+        </view>
+		<button @click="toggleMusic">{{ buttonText2 }}</button>
+        <view v-if="isMusicOpen" class="music-list">
+            <button v-for="item in musicList" :key="item" @click="sendMusicData(item)">Item {{ item }}</button>
+        </view>
+    </view>
+</template>
 
 <style>
 .content {
