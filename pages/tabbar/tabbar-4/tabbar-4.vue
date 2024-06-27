@@ -1,8 +1,9 @@
 <template>
     <view class="content">
-        <button @click="toggleCamera">{{ buttonText1 }}</button>
-        <image v-if="isCameraOpen" :src="cameraUrl" autoplay controls></image>
-        <button @click="toggleMusic">{{ buttonText2 }}</button>
+        <view><button @click="toggleCamera">{{ buttonText1 }}</button>
+        <img v-if="isCameraOpen" :src="cameraUrl" autoplay controls default-src></img>
+        </view>
+		<button @click="toggleMusic">{{ buttonText2 }}</button>
         <view v-if="isMusicOpen" class="music-list">
             <button v-for="item in musicList" :key="item" @click="sendMusicData(item)">Item {{ item }}</button>
         </view>
@@ -110,7 +111,7 @@ button {
     height: 50px;
     width: 200px;
 }
-image {
+img {
     width: 100%;
     height: 100%;
     margin-top: 20px;

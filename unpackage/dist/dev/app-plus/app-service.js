@@ -116,13 +116,13 @@ if (uni.restoreGlobal) {
     }
   }
   const resData1 = [
-    new ResData(0, "awake", "111"),
-    new ResData(1, "diaper", "222"),
-    new ResData(2, "hug", "333"),
-    new ResData(3, "hungry", "444"),
-    new ResData(4, "sleepy", "555"),
-    new ResData(5, "uncomfortable", "666"),
-    new ResData(6, "dontknow", "777")
+    new ResData(1, "awake", "111"),
+    new ResData(2, "diaper", "222"),
+    new ResData(3, "hug", "333"),
+    new ResData(4, "hungry", "444"),
+    new ResData(5, "sleepy", "555"),
+    new ResData(6, "uncomfortable", "666"),
+    new ResData(7, "dontknow", "777")
   ];
   class ResViewModel {
     // Load data from the rankData1 of the Mock file.
@@ -152,7 +152,7 @@ if (uni.restoreGlobal) {
       const isFromButton = uni.getStorageSync("isFromButton");
       if (isFromButton) {
         const generatedId = uni.getStorageSync("generatedId");
-        formatAppLog("log", "at pages/tabbar/tabbar-2/tabbar-2.vue:39", "Retrieved ID:", generatedId);
+        formatAppLog("log", "at pages/tabbar/tabbar-2/tabbar-2.vue:39", "tabbar2:Retrieved ID:", generatedId);
         if (generatedId) {
           this.loadData(generatedId);
         }
@@ -162,7 +162,7 @@ if (uni.restoreGlobal) {
       }
       const history = uni.getStorageSync("historyRecords") || [];
       this.historyRecords = history;
-      formatAppLog("log", "at pages/tabbar/tabbar-2/tabbar-2.vue:55", this.historyRecords);
+      formatAppLog("log", "at pages/tabbar/tabbar-2/tabbar-2.vue:55", "tabbar2:historyRecords:", history);
     },
     methods: {
       loadData(id) {
@@ -284,14 +284,14 @@ if (uni.restoreGlobal) {
             data: { data },
             success: (res) => {
               if (res.statusCode === 200 && res.data && typeof res.data.receivedId === "number") {
-                formatAppLog("log", "at pages/tabbar/tabbar-4/tabbar-4.vue:63", "数据发送成功", res);
+                formatAppLog("log", "at pages/tabbar/tabbar-4/tabbar-4.vue:64", "数据发送成功", res);
                 resolve(res.data.receivedId);
               } else {
                 reject(new Error("Invalid response format"));
               }
             },
             fail: (err) => {
-              formatAppLog("log", "at pages/tabbar/tabbar-4/tabbar-4.vue:70", "数据发送失败", err);
+              formatAppLog("log", "at pages/tabbar/tabbar-4/tabbar-4.vue:71", "数据发送失败", err);
               reject(err);
             }
           });
@@ -307,14 +307,14 @@ if (uni.restoreGlobal) {
             data: { data },
             success: (res) => {
               if (res.statusCode === 200 && res.data && typeof res.data.receivedId === "number") {
-                formatAppLog("log", "at pages/tabbar/tabbar-4/tabbar-4.vue:86", "数据发送成功", res);
+                formatAppLog("log", "at pages/tabbar/tabbar-4/tabbar-4.vue:87", "数据发送成功", res);
                 resolve(res.data.receivedId);
               } else {
                 reject(new Error("Invalid response format"));
               }
             },
             fail: (err) => {
-              formatAppLog("log", "at pages/tabbar/tabbar-4/tabbar-4.vue:93", "数据发送失败", err);
+              formatAppLog("log", "at pages/tabbar/tabbar-4/tabbar-4.vue:94", "数据发送失败", err);
               reject(err);
             }
           });
@@ -324,21 +324,24 @@ if (uni.restoreGlobal) {
   };
   function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "content" }, [
-      vue.createElementVNode(
-        "button",
-        {
-          onClick: _cache[0] || (_cache[0] = (...args) => $options.toggleCamera && $options.toggleCamera(...args))
-        },
-        vue.toDisplayString($data.buttonText1),
-        1
-        /* TEXT */
-      ),
-      $data.isCameraOpen ? (vue.openBlock(), vue.createElementBlock("image", {
-        key: 0,
-        src: $data.cameraUrl,
-        autoplay: "",
-        controls: ""
-      }, null, 8, ["src"])) : vue.createCommentVNode("v-if", true),
+      vue.createElementVNode("view", null, [
+        vue.createElementVNode(
+          "button",
+          {
+            onClick: _cache[0] || (_cache[0] = (...args) => $options.toggleCamera && $options.toggleCamera(...args))
+          },
+          vue.toDisplayString($data.buttonText1),
+          1
+          /* TEXT */
+        ),
+        $data.isCameraOpen ? (vue.openBlock(), vue.createElementBlock("img", {
+          key: 0,
+          src: $data.cameraUrl,
+          autoplay: "",
+          controls: "",
+          "default-src": ""
+        }, null, 8, ["src"])) : vue.createCommentVNode("v-if", true)
+      ]),
       vue.createElementVNode(
         "button",
         {
@@ -349,7 +352,7 @@ if (uni.restoreGlobal) {
         /* TEXT */
       ),
       $data.isMusicOpen ? (vue.openBlock(), vue.createElementBlock("view", {
-        key: 1,
+        key: 0,
         class: "music-list"
       }, [
         (vue.openBlock(true), vue.createElementBlock(

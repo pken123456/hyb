@@ -12,8 +12,9 @@
         "usingComponents" : true,
         "compilerVersion" : 3,
         "modules" : {
-            "LivePusher" : {},
-            "Geolocation" : {}
+            "Geolocation" : {},
+            "VideoPlayer" : {},
+            "LivePusher" : {}
         },
         "distribute" : {
             "android" : {

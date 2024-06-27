@@ -17,8 +17,9 @@
     "url": ""
   },
   "permissions": {
-    "LivePusher": {},
     "Geolocation": {},
+    "VideoPlayer": {},
+    "LivePusher": {},
     "UniNView": {
       "description": "UniNView原生渲染"
     }
