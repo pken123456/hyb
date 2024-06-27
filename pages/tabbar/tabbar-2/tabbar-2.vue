@@ -36,8 +36,8 @@ export default {
         const isFromButton = uni.getStorageSync('isFromButton');
         if (isFromButton) {
             const generatedId = uni.getStorageSync('generatedId');
-            console.log('Retrieved ID:', generatedId);
-
+            console.log('tabbar2:Retrieved ID:', generatedId);
+			
             if (generatedId) {
                 this.loadData(generatedId);
             }
@@ -52,6 +52,7 @@ export default {
         // 从 localStorage 中获取历史记录
         const history = uni.getStorageSync('historyRecords') || [];
         this.historyRecords = history;
+		console.log('tabbar2:historyRecords:',history)
     },
     methods: {
         loadData(id) {

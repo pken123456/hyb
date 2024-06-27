@@ -59,16 +59,14 @@ if (uni.restoreGlobal) {
       goToPage2() {
         this.isLoading = true;
         this.sendDataToDevice(1).then((receivedId) => {
-          formatAppLog("log", "at pages/tabbar/tabbar-1/tabbar-1.vue:25", "Received ID:", receivedId);
+          formatAppLog("log", "at pages/tabbar/tabbar-1/tabbar-1.vue:25", "tabbar1:Received ID:", receivedId);
           uni.setStorageSync("generatedId", receivedId);
           uni.setStorageSync("isFromButton", true);
-          setTimeout(() => {
-            uni.switchTab({
-              url: "/pages/tabbar/tabbar-2/tabbar-2"
-            });
-          }, 500);
+          uni.switchTab({
+            url: "/pages/tabbar/tabbar-2/tabbar-2"
+          });
         }).catch((err) => {
-          formatAppLog("error", "at pages/tabbar/tabbar-1/tabbar-1.vue:37", "Failed to send data:", err);
+          formatAppLog("error", "at pages/tabbar/tabbar-1/tabbar-1.vue:35", "Failed to send data:", err);
           uni.showToast({
             title: `Failed to send data: ${err.errMsg}`,
             icon: "none"
@@ -78,22 +76,22 @@ if (uni.restoreGlobal) {
       },
       sendDataToDevice(data) {
         return new Promise((resolve, reject) => {
-          const deviceIP = "http://192.168.145.40:5000";
+          const deviceIP = "http://192.168.145.40:5001";
           uni.request({
-            url: `${deviceIP}/send`,
+            url: `${deviceIP}/infer`,
             // 根据香橙派接收数据的接口路径
             method: "POST",
-            data: { data: data.toString() },
+            data: { data },
             success: (res) => {
               if (res.statusCode === 200 && res.data && typeof res.data.receivedId === "number") {
-                formatAppLog("log", "at pages/tabbar/tabbar-1/tabbar-1.vue:55", "数据发送成功", res);
+                formatAppLog("log", "at pages/tabbar/tabbar-1/tabbar-1.vue:53", "数据发送成功", res);
                 resolve(res.data.receivedId);
               } else {
                 reject(new Error("Invalid response format"));
               }
             },
             fail: (err) => {
-              formatAppLog("log", "at pages/tabbar/tabbar-1/tabbar-1.vue:62", "数据发送失败", err);
+              formatAppLog("log", "at pages/tabbar/tabbar-1/tabbar-1.vue:60", "数据发送失败", err);
               reject(err);
             }
           });
@@ -118,13 +116,13 @@ if (uni.restoreGlobal) {
     }
   }
   const resData1 = [
-    new ResData(1, "hungry", "111"),
-    new ResData(2, "tried", "222"),
-    new ResData(3, "needs_burping", "333"),
-    new ResData(4, "belly_pain", "444"),
-    new ResData(5, "discomfort", "555"),
-    new ResData(6, "cold_hot", "666"),
-    new ResData(7, "dontknow", "777")
+    new ResData(0, "awake", "111"),
+    new ResData(1, "diaper", "222"),
+    new ResData(2, "hug", "333"),
+    new ResData(3, "hungry", "444"),
+    new ResData(4, "sleepy", "555"),
+    new ResData(5, "uncomfortable", "666"),
+    new ResData(6, "dontknow", "777")
   ];
   class ResViewModel {
     // Load data from the rankData1 of the Mock file.
@@ -164,6 +162,7 @@ if (uni.restoreGlobal) {
       }
       const history = uni.getStorageSync("historyRecords") || [];
       this.historyRecords = history;
+      formatAppLog("log", "at pages/tabbar/tabbar-2/tabbar-2.vue:55", this.historyRecords);
     },
     methods: {
       loadData(id) {
@@ -243,36 +242,233 @@ if (uni.restoreGlobal) {
   const _sfc_main$2 = {
     data() {
       return {
-        title: "Hello"
+        title: "Hello",
+        cameraUrl: "",
+        buttonText1: "openCamera",
+        buttonText2: "musicon",
+        isCameraOpen: false,
+        isMusicOpen: false,
+        musicList: [1, 2, 3, 4, 5, 6, 7]
       };
     },
-    onLoad() {
-    },
     methods: {
-      openCamera() {
+      toggleCamera() {
+        if (this.isCameraOpen) {
+          this.sendVideoData(6);
+          this.isCameraOpen = false;
+          this.buttonText1 = "openCamera";
+          this.cameraUrl = "";
+        } else {
+          this.sendVideoData(7);
+          this.isCameraOpen = true;
+          this.buttonText1 = "closeCamera";
+          this.cameraUrl = "http://192.168.145.40:8080/?action=stream";
+        }
+      },
+      toggleMusic() {
+        if (this.isMusicOpen) {
+          this.isMusicOpen = false;
+          this.buttonText2 = "musicon";
+        } else {
+          this.isMusicOpen = true;
+          this.buttonText2 = "musicoff";
+        }
+      },
+      sendVideoData(data) {
+        return new Promise((resolve, reject) => {
+          const deviceIP = "http://192.168.145.40:5001";
+          uni.request({
+            url: `${deviceIP}/video`,
+            // 根据香橙派接收数据的接口路径
+            method: "POST",
+            data: { data },
+            success: (res) => {
+              if (res.statusCode === 200 && res.data && typeof res.data.receivedId === "number") {
+                formatAppLog("log", "at pages/tabbar/tabbar-4/tabbar-4.vue:63", "数据发送成功", res);
+                resolve(res.data.receivedId);
+              } else {
+                reject(new Error("Invalid response format"));
+              }
+            },
+            fail: (err) => {
+              formatAppLog("log", "at pages/tabbar/tabbar-4/tabbar-4.vue:70", "数据发送失败", err);
+              reject(err);
+            }
+          });
+        });
+      },
+      sendMusicData(data) {
+        return new Promise((resolve, reject) => {
+          const deviceIP = "http://192.168.145.40:5001";
+          uni.request({
+            url: `${deviceIP}/music`,
+            // 根据香橙派接收数据的接口路径
+            method: "POST",
+            data: { data },
+            success: (res) => {
+              if (res.statusCode === 200 && res.data && typeof res.data.receivedId === "number") {
+                formatAppLog("log", "at pages/tabbar/tabbar-4/tabbar-4.vue:86", "数据发送成功", res);
+                resolve(res.data.receivedId);
+              } else {
+                reject(new Error("Invalid response format"));
+              }
+            },
+            fail: (err) => {
+              formatAppLog("log", "at pages/tabbar/tabbar-4/tabbar-4.vue:93", "数据发送失败", err);
+              reject(err);
+            }
+          });
+        });
       }
     }
   };
   function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "content" }, [
-      vue.createElementVNode("button", {
-        onClick: _cache[0] || (_cache[0] = (...args) => $options.openCamera && $options.openCamera(...args))
-      }, "openCamera")
+      vue.createElementVNode(
+        "button",
+        {
+          onClick: _cache[0] || (_cache[0] = (...args) => $options.toggleCamera && $options.toggleCamera(...args))
+        },
+        vue.toDisplayString($data.buttonText1),
+        1
+        /* TEXT */
+      ),
+      $data.isCameraOpen ? (vue.openBlock(), vue.createElementBlock("image", {
+        key: 0,
+        src: $data.cameraUrl,
+        autoplay: "",
+        controls: ""
+      }, null, 8, ["src"])) : vue.createCommentVNode("v-if", true),
+      vue.createElementVNode(
+        "button",
+        {
+          onClick: _cache[1] || (_cache[1] = (...args) => $options.toggleMusic && $options.toggleMusic(...args))
+        },
+        vue.toDisplayString($data.buttonText2),
+        1
+        /* TEXT */
+      ),
+      $data.isMusicOpen ? (vue.openBlock(), vue.createElementBlock("view", {
+        key: 1,
+        class: "music-list"
+      }, [
+        (vue.openBlock(true), vue.createElementBlock(
+          vue.Fragment,
+          null,
+          vue.renderList($data.musicList, (item) => {
+            return vue.openBlock(), vue.createElementBlock("button", {
+              key: item,
+              onClick: ($event) => $options.sendMusicData(item)
+            }, "Item " + vue.toDisplayString(item), 9, ["onClick"]);
+          }),
+          128
+          /* KEYED_FRAGMENT */
+        ))
+      ])) : vue.createCommentVNode("v-if", true)
     ]);
   }
   const PagesTabbarTabbar4Tabbar4 = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__file", "D:/HBuilder demo/test6/pages/tabbar/tabbar-4/tabbar-4.vue"]]);
   const _sfc_main$1 = {
     data() {
       return {
-        title: "Hello"
+        title: "Hello",
+        userInput: "",
+        messages: [],
+        accessToken: "24.85adc768db8083a9a7b9f00c7caa4685.2592000.1721902062.282335-87043351",
+        // 已知的 access token
+        scrollTop: 0
+        // 用于控制 scroll-view 的滚动位置
       };
     },
-    onLoad() {
-    },
-    methods: {}
+    methods: {
+      updateScrollTop() {
+        this.$nextTick(() => {
+          const query = uni.createSelectorQuery().in(this);
+          query.select(".chat-container").boundingClientRect((rect) => {
+            this.scrollTop = rect.height;
+          }).exec();
+        });
+      },
+      async sendMessage() {
+        if (this.userInput.trim() === "")
+          return;
+        this.messages.push({ text: this.userInput, user: true });
+        this.updateScrollTop();
+        const userMessage = this.userInput;
+        this.userInput = "";
+        try {
+          const response = await uni.request({
+            url: `https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ernie-speed-128k?access_token=${this.accessToken}`,
+            method: "POST",
+            header: {
+              "Content-Type": "application/json"
+            },
+            data: {
+              messages: [
+                {
+                  role: "user",
+                  content: userMessage
+                }
+              ]
+            }
+          });
+          const botResponse = response.data.result;
+          this.messages.push({ text: botResponse, user: false });
+          this.updateScrollTop();
+        } catch (error) {
+          formatAppLog("error", "at pages/tabbar/tabbar-5/tabbar-5.vue:61", "Error during API call:", error);
+          this.messages.push({ text: "Error: Unable to communicate with the bot", user: false });
+          this.updateScrollTop();
+        }
+      }
+    }
   };
   function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
-    return vue.openBlock(), vue.createElementBlock("view", { class: "content" }, " 页面 - 5 ");
+    return vue.openBlock(), vue.createElementBlock("view", { class: "content" }, [
+      vue.createElementVNode("scroll-view", {
+        class: "chat-container",
+        "scroll-y": "",
+        "scroll-top": $data.scrollTop,
+        style: { "height": "300upx" }
+      }, [
+        (vue.openBlock(true), vue.createElementBlock(
+          vue.Fragment,
+          null,
+          vue.renderList($data.messages, (message, index) => {
+            return vue.openBlock(), vue.createElementBlock(
+              "view",
+              {
+                key: index,
+                class: vue.normalizeClass(["message", { "user-message": message.user }])
+              },
+              vue.toDisplayString(message.text),
+              3
+              /* TEXT, CLASS */
+            );
+          }),
+          128
+          /* KEYED_FRAGMENT */
+        ))
+      ], 8, ["scroll-top"]),
+      vue.withDirectives(vue.createElementVNode(
+        "input",
+        {
+          class: "input-box",
+          "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.userInput = $event),
+          onConfirm: _cache[1] || (_cache[1] = (...args) => $options.sendMessage && $options.sendMessage(...args)),
+          placeholder: "Type your message..."
+        },
+        null,
+        544
+        /* NEED_HYDRATION, NEED_PATCH */
+      ), [
+        [vue.vModelText, $data.userInput]
+      ]),
+      vue.createElementVNode("button", {
+        class: "send-button",
+        onClick: _cache[2] || (_cache[2] = (...args) => $options.sendMessage && $options.sendMessage(...args))
+      }, "Send")
+    ]);
   }
   const PagesTabbarTabbar5Tabbar5 = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "D:/HBuilder demo/test6/pages/tabbar/tabbar-5/tabbar-5.vue"]]);
   __definePage("pages/tabbar/tabbar-1/tabbar-1", PagesTabbarTabbar1Tabbar1);

@@ -11,7 +11,10 @@
     "app-plus" : {
         "usingComponents" : true,
         "compilerVersion" : 3,
-        "modules" : {},
+        "modules" : {
+            "LivePusher" : {},
+            "Geolocation" : {}
+        },
         "distribute" : {
             "android" : {
                 "permissions" : [
@@ -33,7 +36,13 @@
                 ]
             },
             "ios" : {},
-            "sdkConfigs" : {}
+            "sdkConfigs" : {
+                "geolocation" : {
+                    "system" : {
+                        "__platform__" : [ "ios", "android" ]
+                    }
+                }
+            }
         }
     },
     "quickapp" : {},
@@ -45,7 +54,7 @@
         "usingComponents" : true
     },
     "vueVersion" : "3",
-	"uni-wifi": {
-	  "provider": "uni-wifi-provider"
-	}
+    "uni-wifi" : {
+        "provider" : "uni-wifi-provider"
+    }
 }
