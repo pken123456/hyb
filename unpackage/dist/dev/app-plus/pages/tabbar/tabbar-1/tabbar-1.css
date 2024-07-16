@@ -1,9 +1,86 @@
 
 .content {
     text-align: center;
-    margin-top: 6.25rem;
 }
-uni-button {
-    height: 50px;
-    width: 200px;
+.uni-list {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.uni-list-cell {
+    margin: 10px;
+}
+.circle-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+	font-weight: bold;
+    color: white;
+    background-color: #3d87ff;
+    width: 200px; /* 为圆形按钮设置固定宽度 */
+    height: 200px; /* 为圆形按钮设置固定高度 */
+    border-radius: 100px; /* 为了实现圆形形状，设置为宽度/高度的一半 */
+    text-align: center;
+    margin: 40% auto; /* 将按钮居中 */
+    box-shadow: 0 0 10px #3d87ff; /* 阴影效果 */
+    opacity: 0.95;
+    transition: transform 0.3s; /* 动画效果 */
+}
+.contentp {
+    display: block;
+    margin: 50% auto; /* 居中 */
+}
+.wait-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    margin-top: 40%;
+}
+@keyframes spin {
+0% { transform: rotate(0deg);
+}
+100% { transform: rotate(360deg);
+}
+}
+.progress-container {
+    width: 80%;
+    overflow: hidden;
+    height: 80px;
+    margin: 20px 0;
+	padding: 10px;
+	display: block;
+}
+.progress-container p{
+	display: flex;
+	justify-content: center;
+}
+.progress-bar {
+    height: 50%;
+	background-color: #f3f3f3;
+	border-radius: 50px;
+    background-color: #056cff;
+    transition: width 0.3s ease;
+}
+.loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+}
+.loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #056cff; /* Blue */
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    animation: spin 2s linear infinite;
+}
+@keyframes spin {
+0% { transform: rotate(0deg);
+}
+100% { transform: rotate(360deg);
+}
 }

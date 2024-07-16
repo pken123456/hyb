@@ -9,10 +9,12 @@ export default {
         return {
             resData: resSource1, // 此处resData用来在组件中存储资源数据
             currentItem: null, // 当前展示的数据项
-            historyRecords: [] // 历史记录
+            historyRecords: [] ,// 历史记录
+			showhistory: true,
         }
     },
     onShow() {
+		this.showhistory = true;
         // 检查是否通过按钮点击进入
         const isFromButton = uni.getStorageSync('isFromButton');
         if (isFromButton) {
@@ -36,6 +38,9 @@ export default {
         console.log('tabbar2:historyRecords:', history);
     },
     methods: {
+		showHistory() {
+			this.showhistory = false;
+		},
         loadData(id) {
             this.currentItem = this.resData.find(item => item.id === parseInt(id));
             if (this.currentItem) {
@@ -57,25 +62,29 @@ export default {
 </script>
 
 <template>
-    <view class="content">
-        <div class="content2" v-if="currentItem">
+    <view class="content" v-if="showhistory">
+        <view class="content2" v-if="currentItem">
 			<p>检测结果如下</p>
             <p>{{ currentItem.type }}</p>
             <p>{{ currentItem.res }}</p>
-        </div>
-        
-        <div class="history">
-            <div class='title'><h3>历史记录</h3></div>
-            <div v-if="historyRecords.length === 0">暂无记录</div>
-            <ul>
-                <li class='list1' v-for="record in historyRecords" :key="record.time">
-                    <span>时间: {{ record.time }}</span>
-                    <span>类型: {{ record.type }}</span>
-                    <span>结果: {{ record.res }}</span>
-                </li>
-            </ul>
-        </div>
+        </view>
+        <view class="content2" v-else>
+			请返回首页进行检测
+		</view>
+        <view class="history">
+            <button type="primary" @click="showHistory">历史记录</button>
+        </view>
     </view>
+	<view class="content" v-else>
+	<view v-if="historyRecords.length === 0">暂无记录</view>
+	<ul>
+	    <li class='list1' v-for="record in historyRecords" :key="record.time">
+	        <span>时间: {{ record.time }}</span>
+	        <span>类型: {{ record.type }}</span>
+	        <span>结果: {{ record.res }}</span>
+	    </li>
+	</ul>
+	</view>	
 </template>
 
 <style>
@@ -83,14 +92,20 @@ export default {
         text-align: center;
     }
     .content2 {
-        color: #1014f3;
-		margin-top: 25px;
+        color: #056cff;
+		margin-top: 60%;
     }
-    .history {
-        margin-top: 20px;
+    .history{
+		margin-top: 40%;
+		padding:0 25% 0 25%; 
     }
+	.history button{
+		background-color: #056cff;
+		color: white;
+	}
 	.title{
 		margin-bottom: 20px;
+		size: 30%;
 	}
     ul {
         list-style-type: none; /* 移除列表样式 */
@@ -99,9 +114,10 @@ export default {
     .list1 {
         border: solid #aaaaaa; /* 添加边框 */
 		border-width: 2px 0 2px 0;
-        padding: 6px; /* 内边距 */
+        padding: 6px 16px; /* 内边距 */
         display: flex; /* 使用 flexbox 布局 */
         flex-direction: column; /* 垂直排列 */
+		text-align: left;
     }
     .list1 span {
         margin: 5px 0; /* 每个 span 的上下外边距 */

@@ -41,6 +41,7 @@
       "kernel": "WKWebview"
     },
     "usingComponents": true,
+    "runmode": "liberate",
     "compilerVersion": 3,
     "distribute": {
       "google": {
@@ -86,7 +87,7 @@
     },
     "allowsInlineMediaPlayback": true,
     "safearea": {
-      "background": "#333",
+      "background": "#ffffff",
       "bottom": {
         "offset": "auto"
       }
@@ -115,7 +116,7 @@
       "iconWidth": "24px",
       "spacing": "3px",
       "height": "50px",
-      "backgroundColor": "#333",
+      "backgroundColor": "#ffffff",
       "list": [
         {
           "pagePath": "pages/tabbar/tabbar-1/tabbar-1",

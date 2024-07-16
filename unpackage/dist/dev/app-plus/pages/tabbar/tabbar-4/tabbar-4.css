@@ -1,23 +1,38 @@
 
 .content {
-    text-align: center;
-    height: 12.5rem;
-    margin-top: 6.25rem;
+	display: block;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
 }
-uni-button {
+.cameratype{
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	text-align: center;
+	margin-top: 10px;
+}
+.cameratype uni-button {
     height: 50px;
-    width: 200px;
+    width: 180px;
+	background-color: #056cff;
+	color: white;
 }
-img {
+.video-player {
     width: 100%;
     height: 100%;
-    margin-top: 20px;
+    margin-top: 20%;
 }
 .music-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-top: 20px;
+    flex-direction: column;
 }
 .music-list uni-button {
-    display: block;
-    margin: 10px auto;
-    width: 100px;
+    width: 200px;
+	margin: 10px;
+	background-color: #056cff;
+	color: white;
 }

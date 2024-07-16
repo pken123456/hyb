@@ -64,13 +64,17 @@ export default {
     </scroll-view>
     <textarea class="input-box" confirm-type="send"
 	 v-model="userInput" @blur="sendMessage" placeholder="Type your message..." />
-    <button class="send-button" @tap="sendMessage">发送</button>
+    <button type="primary" class="send-button" @tap="sendMessage">发送</button>
   </view>
 </template>
 
 <style>
   .content {
     height: 100%;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
   }
   .chat-container {
     border: 1px solid #ccc;
@@ -90,15 +94,24 @@ export default {
 	margin-left: 25%;
   }
   .input-box {
-	width: 100%;
+	width: 90%;
 	height: 7%;
-    padding: 10px 20px 10px 20px;
-/*    margin: 0 20px 0 20px; */
+    padding: 10px 5% 10px 5%;
+	margin:0 25px 25px 25px;
+	border: 1px solid #aaaaaa;
   }
-  .send-button {
-	height: 7%;
-	background-color:mediumspringgreen;
-    padding: 10px;
-  }
+.send-button {
+    height: 7%;
+    width: 80%;
+    background-color: #056cff;
+    color: white;
+    font-size: 20px;
+    border-radius: 100px;
+    box-shadow: 0 0 5px #056cff; /* 阴影效果 */
+    opacity: 0.95;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 </style>
 

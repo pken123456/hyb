@@ -44,7 +44,7 @@
 	},
 	"tabBar": {
 		"borderStyle": "black",
-		"backgroundColor": "#333",
+		"backgroundColor": "#ffffff",
 		"color": "#8F8F94",
 		"selectedColor": "#f33e54",
 		"list": [{
@@ -89,7 +89,7 @@
 		]
 	},
 	"easycom": {
-	  "autoscan": true,
+	  "autoscan": true
 	},
 	"app-plus":{"bounce":"none"}
 }
